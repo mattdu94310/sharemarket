@@ -9,23 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ejb.services.UserService;
-import jpa.entities.User;
+import ejb.services.UtilisateurService;
+import jpa.entities.Utilisateur;
 
 /**
- * Servlet implementation class Inscription
+ * Servlet implementation class Connexion
  */
-@WebServlet("/Inscription")
-public class Inscription extends HttpServlet {
+@WebServlet("/Connexion")
+public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
 	@EJB
-	private UserService service;
+	private UtilisateurService utilisateurService;
 	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Inscription() {
+    public Connexion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +31,14 @@ public class Inscription extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Utilisateur utilisateur = utilisateurService.connexion(request.getParameter("email"), request.getParameter("password"));
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("email=").append(request.getParameter("email")).append("\n");
-		stringBuilder.append("password=").append(request.getParameter("password")).append("\n");
-		User user = new User();
-		user.setLogin(request.getParameter("email"));
-		user.setPassword(request.getParameter("password"));
-		service.addUser(user);
+		if(utilisateur==null){
+			stringBuilder.append("Utilisateur Inconnu \n");
+		}
+		else{
+			stringBuilder.append("Bienvenue ").append(utilisateur.getPrenom()).append("\n");
+		}
 		response.getWriter().append(stringBuilder.toString());
 	}
 
@@ -51,7 +49,5 @@ public class Inscription extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	
 
 }
