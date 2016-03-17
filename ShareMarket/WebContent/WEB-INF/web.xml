@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>ShareMarket</display-name>
-  <welcome-file-list>
-    <welcome-file>home.xhtml</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <param-name>primefaces.THEME</param-name>
-    <param-value>bluesky</param-value>
-  </context-param>
-  <servlet>
-    <servlet-name>facesServlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>facesServlet</servlet-name>
-    <url-pattern>*.xhtml</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>ShareMarket</display-name>
+	<welcome-file-list>
+		<welcome-file>/home.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<display-name>Admin</display-name>
+		<servlet-name>Admin</servlet-name>
+		<jsp-file>/admin.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<display-name>Investor</display-name>
+		<servlet-name>Investor</servlet-name>
+		<jsp-file>/investor.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<display-name>SocietyMember</display-name>
+		<servlet-name>SocietyMember</servlet-name>
+		<jsp-file>/societymember.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Admin</servlet-name>
+		<url-pattern>/Admin</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Investor</servlet-name>
+		<url-pattern>/Investor</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SocietyMember</servlet-name>
+		<url-pattern>/SocietyMember</url-pattern>
+	</servlet-mapping>
 </web-app>

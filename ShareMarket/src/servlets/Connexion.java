@@ -36,10 +36,16 @@ public class Connexion extends HttpServlet {
 		if(utilisateur==null){
 			stringBuilder.append("Utilisateur Inconnu \n");
 		}
-		else{
-			stringBuilder.append("Bienvenue ").append(utilisateur.getPrenom()).append("\n");
+		
+		
+		
+		if(utilisateur.getAdministrateur()==1){
+			getServletContext().getRequestDispatcher("/Admin").forward(request, response);
+		}else if (utilisateur.getMembreSociete()==1){
+			getServletContext().getRequestDispatcher("/MembreSociete").forward(request, response);
+		}else{
+			getServletContext().getRequestDispatcher("/Investissor").forward(request, response);
 		}
-		response.getWriter().append(stringBuilder.toString());
 	}
 
 	/**
