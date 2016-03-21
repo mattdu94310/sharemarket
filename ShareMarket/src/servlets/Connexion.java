@@ -36,9 +36,6 @@ public class Connexion extends HttpServlet {
 		if(utilisateur==null){
 			stringBuilder.append("Utilisateur Inconnu \n");
 		}
-		
-		
-		
 		if(utilisateur.getAdministrateur()==1){
 			getServletContext().getRequestDispatcher("/Admin").forward(request, response);
 		}else if (utilisateur.getMembreSociete()==1){

@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.1">
 	<display-name>ShareMarket</display-name>
 	<welcome-file-list>
-		<welcome-file>/home.html</welcome-file>
+		<welcome-file>home.html</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<display-name>Admin</display-name>
