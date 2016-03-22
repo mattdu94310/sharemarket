@@ -13,6 +13,7 @@ import java.util.List;
 @Table(name="Utilisateur")
 @NamedQueries({
 @NamedQuery(name="Utilisateur.findAll", query="SELECT u FROM Utilisateur u"),
+@NamedQuery(name="Utilisateur.findWithField", query="SELECT u FROM Utilisateur u where u.login like :login and u.nom like :nom and u.prenom like :prenom and (u.administrateur=:administrateur or u.investisseur=:investisseur or u.membreSociete=:membreSociete)"),
 @NamedQuery(name="Utilisateur.connexion", query="SELECT u FROM Utilisateur u where u.login=:login and u.password=:password")
 })
 public class Utilisateur implements Serializable {

@@ -8,5 +8,7 @@
 </head>
 <body>
 <h1>Administration home page</h1>
+<a href="userform.html">Find User</a>
+<a href="msincription.html">Member society inscription</a>
 </body>
 </html>

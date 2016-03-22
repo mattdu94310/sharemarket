@@ -60,4 +60,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return false;
 	}
 
+	@Override
+	public List<Utilisateur> find(String login, String nom, String prenom, byte adminstrateur, byte memberSociety, byte investisseur, byte valide) {
+		Query query = em.createNamedQuery("Utilisateur.findWithField");
+		query.setParameter("login", "%"+login+"%");
+		query.setParameter("nom", "%"+nom+"%");
+		query.setParameter("prenom", "%"+prenom+"%");
+		query.setParameter("administrateur", adminstrateur);
+		query.setParameter("investisseur", investisseur);
+		query.setParameter("membreSociete", memberSociety);
+		return (List<Utilisateur>) query.getResultList();
+	}
+
 }
