@@ -30,8 +30,8 @@
     <jsp-file>/investor.jsp</jsp-file>
   </servlet>
   <servlet>
-    <display-name>SocietyMember</display-name>
-    <servlet-name>SocietyMember</servlet-name>
+    <display-name>MembreSociete</display-name>
+    <servlet-name>MembreSociete</servlet-name>
     <jsp-file>/societymember.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
@@ -43,8 +43,8 @@
     <url-pattern>/Investor</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>SocietyMember</servlet-name>
-    <url-pattern>/SocietyMember</url-pattern>
+    <servlet-name>MembreSociete</servlet-name>
+    <url-pattern>/MembreSociete</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
     <servlet-name>UserList</servlet-name>

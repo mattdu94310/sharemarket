@@ -69,6 +69,7 @@ public class UtilisateurDAO implements UtilisateurDAOInterface {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> find(String login, String nom, String prenom, byte adminstrateur, byte memberSociety, byte investisseur, byte valide) {
 		Query query = em.createNamedQuery("Utilisateur.findWithField");

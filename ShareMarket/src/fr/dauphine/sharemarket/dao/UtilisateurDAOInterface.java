@@ -3,7 +3,6 @@ package fr.dauphine.sharemarket.dao;
 import java.util.List;
 
 import fr.dauphine.sharemarket.error.ShareMarketException;
-import fr.dauphine.sharemarket.model.Societe;
 import fr.dauphine.sharemarket.model.Utilisateur;
 
 public interface UtilisateurDAOInterface {

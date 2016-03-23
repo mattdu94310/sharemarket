@@ -9,7 +9,8 @@
 </head>
 <body>
 <h1>Liste des utlisateurs</h1>
-<%  
+<% 
+@SuppressWarnings("unchecked")
 List<Utilisateur> list = (List<Utilisateur>)request.getAttribute("utilisateurs");
 %>
 <table>
