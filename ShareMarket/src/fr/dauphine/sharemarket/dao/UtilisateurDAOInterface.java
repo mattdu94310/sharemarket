@@ -1,19 +1,19 @@
-package ejb.services;
+package fr.dauphine.sharemarket.dao;
 
 import java.util.List;
 
-import jpa.entities.Societe;
-import jpa.entities.Utilisateur;
+import fr.dauphine.sharemarket.model.Societe;
+import fr.dauphine.sharemarket.model.Utilisateur;
 
-public interface UtilisateurService {
+public interface UtilisateurDAOInterface {
 	
 	//Utilisateur
 	public Utilisateur connexion(String login, String password);
-	public List<Utilisateur> getAll();
-	public boolean supprimer(Utilisateur utilisateur);
+	public List<Utilisateur> selectAll();
+	public boolean supprimer(String login);
 	public boolean maj(Utilisateur utilisateur);
 	public List<Utilisateur> find(String login, String nom, String prenom, byte adminstrateur, byte membersociety, byte investisseur, byte valide );
-	
+	public Utilisateur findById(String login);
 	//Membre société
 	public Utilisateur creerMembreSociete(String login, String password);
 	

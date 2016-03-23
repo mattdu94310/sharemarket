@@ -1,4 +1,4 @@
-package servlets;
+package fr.dauphine.sharemarket.controller;
 
 import java.io.IOException;
 
@@ -8,9 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import ejb.services.UtilisateurService;
-import jpa.entities.Utilisateur;
+import fr.dauphine.sharemarket.dao.UtilisateurDAOInterface;
+import fr.dauphine.sharemarket.model.Utilisateur;
 
 /**
  * Servlet implementation class Connexion
@@ -20,11 +21,10 @@ public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@EJB
-	private UtilisateurService utilisateurService;
+	private UtilisateurDAOInterface utilisateurService;
 	
     public Connexion() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,10 +32,13 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilisateur utilisateur = utilisateurService.connexion(request.getParameter("email"), request.getParameter("password"));
-		StringBuilder stringBuilder = new StringBuilder();
+		HttpSession session = request.getSession(true);
 		if(utilisateur==null){
-			stringBuilder.append("Utilisateur Inconnu \n");
+			session.setAttribute("connection_error", 1);
+			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 		}
+		
+		session.setAttribute("connected_user", utilisateur);
 		if(utilisateur.getAdministrateur()==1){
 			getServletContext().getRequestDispatcher("/Admin").forward(request, response);
 		}else if (utilisateur.getMembreSociete()==1){

@@ -1,4 +1,4 @@
-package jpa.entities;
+package fr.dauphine.sharemarket.model;
 
 import java.io.Serializable;
 import javax.persistence.*;

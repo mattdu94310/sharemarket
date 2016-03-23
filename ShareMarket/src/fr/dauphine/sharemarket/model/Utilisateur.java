@@ -1,4 +1,4 @@
-package jpa.entities;
+package fr.dauphine.sharemarket.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -13,7 +13,8 @@ import java.util.List;
 @Table(name="Utilisateur")
 @NamedQueries({
 @NamedQuery(name="Utilisateur.findAll", query="SELECT u FROM Utilisateur u"),
-@NamedQuery(name="Utilisateur.findWithField", query="SELECT u FROM Utilisateur u where u.login like :login and u.nom like :nom and u.prenom like :prenom and (u.administrateur=:administrateur or u.investisseur=:investisseur or u.membreSociete=:membreSociete)"),
+@NamedQuery(name="Utilisateur.findByLogin", query="SELECT u FROM Utilisateur u where u.login=:login"),
+@NamedQuery(name="Utilisateur.findWithField", query="SELECT u FROM Utilisateur u where u.login like :login and u.nom like :nom and u.prenom like :prenom and (u.administrateur=:administrateur or u.investisseur=:investisseur or u.membreSociete=:membreSociete) and u.valide=:valide"),
 @NamedQuery(name="Utilisateur.connexion", query="SELECT u FROM Utilisateur u where u.login=:login and u.password=:password")
 })
 public class Utilisateur implements Serializable {
@@ -40,6 +41,9 @@ public class Utilisateur implements Serializable {
 
 	@Column(nullable=false, length=30)
 	private String prenom;
+
+	@Column(nullable=false)
+	private byte valide;
 
 	//bi-directional many-to-one association to Offre
 	@OneToMany(mappedBy="utilisateur")
@@ -102,6 +106,14 @@ public class Utilisateur implements Serializable {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	public byte getValide() {
+		return this.valide;
+	}
+
+	public void setValide(byte valide) {
+		this.valide = valide;
 	}
 
 	public List<Offre> getOffres() {
