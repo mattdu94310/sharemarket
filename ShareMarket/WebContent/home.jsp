@@ -25,8 +25,8 @@
 	<h2>Connectez-vous</h2>
 	<%	
 	if(session.getAttribute("connection_error")!=null){
+		out.println("<p style=\"color:red;\">"+session.getAttribute("connection_error")+"</p>"); 
 		session.removeAttribute("connection_error");
-		out.println("<p style=\"color:red;\">Identifiants incorrects</p>"); 
 	}%>
 	<form action="Connexion" method="POST">
 		<label>Email</label> <input type="text" name="email" value="" /> <br />

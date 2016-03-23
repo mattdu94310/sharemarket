@@ -13,15 +13,12 @@
 Utilisateur utilisateur = (Utilisateur)request.getAttribute("utilisateur");
 %>
 <form action="AdminFunction" method ="post">
-	<label>Login</label> <input type="text" name="login" value="<%out.println(utilisateur.getLogin());%>"/> <br />
-	<label>Nom</label> <input type="text" name="nom" value="<%out.println(utilisateur.getNom());%>" /> <br /> 
-	<label>Prenom</label> <input type="text" name="prenom" value="<%out.println(utilisateur.getPrenom());%>" /> <br /> 
-	<label>Mot de passe</label> <input type="password" name="password" value="<%out.println(utilisateur.getPassword());%>" /> <br /> 
-	<label>Rôles</label><br />
-	<INPUT type="checkbox" name="admin" value="admin" <%if(utilisateur.getAdministrateur()==1)out.println("checked");%>> Administrateur
-	<INPUT type="checkbox" name="membresociety" value="membresociety" <%if(utilisateur.getMembreSociete()==1)out.println("checked");%>> Membre société
-	<INPUT type="checkbox" name="investor" value="investor" <%if(utilisateur.getInvestisseur()==1)out.println("checked");%>> Investisseur <br />
-	<INPUT type="checkbox" name="valide" value="valide" <%if(utilisateur.getValide()==1)out.println("checked");%>> Utilisateur validé <br />
+	<input type="hidden" name="login" value="<%out.print(utilisateur.getLogin());%>"/>
+	<label>Login</label> <input type="text" name="loginDisplay" value="<%out.print(utilisateur.getLogin());%>" disabled/> <br />
+	<label>Nom</label> <input type="text" name="nom" value="<%out.print(utilisateur.getNom());%>" /> <br /> 
+	<label>Prenom</label> <input type="text" name="prenom" value="<%out.print(utilisateur.getPrenom());%>" /> <br /> 
+	<label>Mot de passe</label> <input type="password" name="password" value="<%out.print(utilisateur.getPassword());%>" /> <br /> 
+	<INPUT type="checkbox" name="valide" value="valide" <%if(utilisateur.getValide()==1)out.print("checked");%>> Utilisateur validé <br />
 	<input type="submit" value="Modifier Utilisateur" name="Demande" />
 </form>
 </body>

@@ -24,7 +24,7 @@ for(Utilisateur utilisateur : list) {
     out.println("<td>"+utilisateur.getInvestisseur()+"</td>");
     out.println("<td>"+utilisateur.getMembreSociete()+"</td>");
     out.println("<td>"+utilisateur.getValide()+"</td>");
-    out.println("<td><a href=\""+request.getContextPath()+"/AdminFunction?Demande=SupprimerUtilisateur&id="+utilisateur.getLogin()+"\">Supprimer</a><a href=\""+request.getContextPath()+"/AdminFunction?Demande=FormulaireUtilisateur&id="+utilisateur.getLogin()+"\">Modifier</a></td>");
+    out.println("<td><a href=\""+request.getContextPath()+"/AdminFunction?Demande=FormulaireUtilisateur&id="+utilisateur.getLogin()+"\">Modifier</a><br /><a href=\""+request.getContextPath()+"/AdminFunction?Demande=SupprimerUtilisateur&id="+utilisateur.getLogin()+"\">Supprimer</a></td>");
     out.println("</tr>");
 }
 %>

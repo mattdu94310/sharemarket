@@ -2,6 +2,7 @@ package fr.dauphine.sharemarket.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.dauphine.sharemarket.dao.UtilisateurDAOInterface;
+import fr.dauphine.sharemarket.error.MessagesDErreurs;
+import fr.dauphine.sharemarket.error.ShareMarketException;
 import fr.dauphine.sharemarket.model.Utilisateur;
 
 /**
@@ -20,7 +23,7 @@ import fr.dauphine.sharemarket.model.Utilisateur;
 @WebServlet("/AdminFunction")
 public class AdminFunction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    Logger ADMIN_FUNCTION_LOGGER = Logger.getLogger(AdminFunction.class.getCanonicalName());   
 	@EJB
 	private UtilisateurDAOInterface utilisateurDAO;
 	
@@ -33,10 +36,10 @@ public class AdminFunction extends HttpServlet {
 	}
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		Byte isAdmin=0;
-		if(session.getAttribute("connected_user")!=null){
-			Utilisateur utilisateur = (Utilisateur) request.getAttribute("connected_user");
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connected_user");
+		if(utilisateur!=null){
 			isAdmin=utilisateur.getAdministrateur();
 		}
 		if(isAdmin==0){
@@ -58,40 +61,49 @@ public class AdminFunction extends HttpServlet {
 				
 			case "Modifier Utilisateur" : 
 				modifierUtilisateur(request,response);
+				break;
+				
+			case "Ajouter Membre" :
+				creerMembreSociete(request,response);
 			}
 		}
-
 	}
 
 
+	private void creerMembreSociete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("login").trim().equals("") || request.getParameter("password").trim().equals("") || request.getParameter("nom").trim().equals("") || request.getParameter("prenom").trim().equals("") || request.getParameter("nomsociete").trim().equals("")){
+			request.setAttribute("message_error", MessagesDErreurs.getMessageDerreur("3"));
+			getServletConfig().getServletContext().getRequestDispatcher("/MInscription").forward(request,response);
+			return;
+		}
+		try {
+			utilisateurDAO.creerMembreSociete(request.getParameter("login"),request.getParameter("password"), request.getParameter("nom"),request.getParameter("prenom"), request.getParameter("nomsociete") );
+		} catch (ShareMarketException e) {
+			request.setAttribute("message_error", e.getMessage());
+			getServletConfig().getServletContext().getRequestDispatcher("/MInscription").forward(request,response);
+			return;
+		}
+		request.setAttribute("message_info", "Utilisateur correctement ajouté à la base");
+		getServletConfig().getServletContext().getRequestDispatcher("/Admin").forward(request,response);
+	}
+
 	private void modifierUtilisateur(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		Utilisateur utilisateur = utilisateurDAO.findById(request.getParameter("login"));
 		utilisateur.setNom(request.getParameter("nom"));
 		utilisateur.setPrenom(request.getParameter("prenom"));
 		utilisateur.setPassword(request.getParameter("password"));
-		Byte admin=0, investor=0, membersociety=0, valide=0;
-		if(request.getParameter("admin")!=null){
-			admin=1;
-		}
-		if(request.getParameter("investor")!=null){
-			investor=1;
-		}
-		if(request.getParameter("membersociety")!=null){
-			membersociety=1;
-		}
+		Byte valide=0;
 		if(request.getParameter("valide")!=null){
 			valide=1;
 		}
-		utilisateur.setAdministrateur(admin);
-		utilisateur.setMembreSociete(membersociety);
-		utilisateur.setInvestisseur(investor);
 		utilisateur.setValide(valide);
 		utilisateurDAO.maj(utilisateur);
 		precedenteRecherche(request, response);
 	}
 
 	private void rechercherUtilisateur(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		byte admin=0, investor=0, membersociety=0,valide=0;
 		if(request.getParameter("admin")!=null){
 			admin=1;
@@ -114,11 +126,11 @@ public class AdminFunction extends HttpServlet {
 		session.setAttribute("search_user_investisseur", investor);
 		List<Utilisateur> utilisateurs = utilisateurDAO.find(request.getParameter("login"), request.getParameter("nom"), request.getParameter("prenom"),admin, membersociety, investor, valide);
 		request.setAttribute("utilisateurs", utilisateurs); 
-		getServletConfig().getServletContext().getRequestDispatcher("/UserList").forward(request,response);
+		getServletConfig().getServletContext().getRequestDispatcher("/userlist.jsp").forward(request,response);
 	}
 	
 	private void precedenteRecherche(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("search_user_login");
 		String nom = (String) session.getAttribute("search_user_nom");
 		String prenom = (String) session.getAttribute("search_user_prenom");

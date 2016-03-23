@@ -9,6 +9,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import fr.dauphine.sharemarket.error.MessagesDErreurs;
+import fr.dauphine.sharemarket.error.ShareMarketException;
+import fr.dauphine.sharemarket.model.Societe;
 import fr.dauphine.sharemarket.model.Utilisateur;
 
 @Stateless
@@ -61,12 +64,6 @@ public class UtilisateurDAO implements UtilisateurDAOInterface {
 	}
 
 	@Override
-	public Utilisateur creerMembreSociete(String login, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean inscriptionInvestisseur(Utilisateur utilisateur) {
 		// TODO Auto-generated method stub
 		return false;
@@ -88,7 +85,7 @@ public class UtilisateurDAO implements UtilisateurDAOInterface {
 	@Override
 	public Utilisateur findById(String login) {
 		Query query = em.createNamedQuery("Utilisateur.findByLogin");
-		query.setParameter("login", login);
+		query.setParameter("login", login.trim());
 		Utilisateur utilisateur = null;
 		try {
 			utilisateur = (Utilisateur) query.getSingleResult();
@@ -96,6 +93,29 @@ public class UtilisateurDAO implements UtilisateurDAOInterface {
 			LOGGER.severe("Pas d'utilisateur trouvé (login = "+login+") : "+e);
 			return null;
 		}
+		return utilisateur;
+	}
+
+	@Override
+	public Utilisateur creerMembreSociete(String login, String password, String nom, String prenom, String societename) throws ShareMarketException {
+		if(findById(login)!=null)throw new ShareMarketException(MessagesDErreurs.getMessageDerreur("1"));
+		Query query = em.createNamedQuery("Societe.findByName");
+		query.setParameter("nom", societename);
+		if(query.getSingleResult()!=null)throw new ShareMarketException(MessagesDErreurs.getMessageDerreur("2"));
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setLogin(login);
+		utilisateur.setPassword(password);
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setMembreSociete((byte)1);
+		utilisateur.setValide((byte)1);
+		Societe societe = new Societe();
+		societe.setNom(societename);
+		societe.setMembreSocieteLogin(login);
+		em.persist(utilisateur);
+		em.flush();
+		em.persist(societe);
+		em.flush();
 		return utilisateur;
 	}
 

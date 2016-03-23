@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.dauphine.sharemarket.dao.UtilisateurDAOInterface;
+import fr.dauphine.sharemarket.error.MessagesDErreurs;
 import fr.dauphine.sharemarket.model.Utilisateur;
 
 /**
@@ -34,10 +35,15 @@ public class Connexion extends HttpServlet {
 		Utilisateur utilisateur = utilisateurService.connexion(request.getParameter("email"), request.getParameter("password"));
 		HttpSession session = request.getSession(true);
 		if(utilisateur==null){
-			session.setAttribute("connection_error", 1);
+			session.setAttribute("connection_error", MessagesDErreurs.getMessageDerreur("4"));
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+			return;
 		}
-		
+		if(utilisateur.getValide()==0){
+			session.setAttribute("connection_error", MessagesDErreurs.getMessageDerreur("5"));
+			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+			return;
+		}
 		session.setAttribute("connected_user", utilisateur);
 		if(utilisateur.getAdministrateur()==1){
 			getServletContext().getRequestDispatcher("/Admin").forward(request, response);

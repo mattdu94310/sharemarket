@@ -11,12 +11,15 @@ import java.util.List;
  */
 @Entity
 @Table(name="Societe")
-@NamedQuery(name="Societe.findAll", query="SELECT s FROM Societe s")
+@NamedQueries({
+	@NamedQuery(name="Societe.findAll", query="SELECT s FROM Societe s"),
+	@NamedQuery(name="Societe.findByName", query="SELECT s FROM Societe s where s.nom=:nom")
+})
 public class Societe implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_societe", unique=true, nullable=false)
 	private int idSociete;
 
@@ -26,7 +29,7 @@ public class Societe implements Serializable {
 	@Column(nullable=false, length=100)
 	private String nom;
 
-	@Column(nullable=false, length=255)
+	@Column(length=255)
 	private String resume;
 
 	//bi-directional many-to-one association to Contrat
