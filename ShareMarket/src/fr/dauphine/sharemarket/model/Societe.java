@@ -14,6 +14,7 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="Societe.findAll", query="SELECT s FROM Societe s"),
 	@NamedQuery(name="Societe.findByName", query="SELECT s FROM Societe s where s.nom=:nom")
+	@NamedQuery(name="Societe.findById",query="SELECT s FROM")
 })
 public class Societe implements Serializable {
 	private static final long serialVersionUID = 1L;

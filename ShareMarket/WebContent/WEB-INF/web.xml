@@ -14,12 +14,12 @@
     <servlet-name>EditUser</servlet-name>
     <jsp-file>/edituser.jsp</jsp-file>
   </servlet>
-    <servlet>
+  <servlet>
     <display-name>MInscription</display-name>
     <servlet-name>MInscription</servlet-name>
     <jsp-file>/minscription.jsp</jsp-file>
   </servlet>
-   <servlet>
+  <servlet>
     <display-name>UserList</display-name>
     <servlet-name>UserList</servlet-name>
     <jsp-file>/userlist.jsp</jsp-file>
@@ -34,7 +34,7 @@
     <servlet-name>MembreSociete</servlet-name>
     <jsp-file>/societymember.jsp</jsp-file>
   </servlet>
-    <servlet>
+  <servlet>
     <display-name>EditContract</display-name>
     <servlet-name>EditContract</servlet-name>
     <jsp-file>/editcontract.jsp</jsp-file>
@@ -43,7 +43,7 @@
     <servlet-name>EditContract</servlet-name>
     <url-pattern>/EditContract</url-pattern>
   </servlet-mapping>
-     <servlet>
+  <servlet>
     <display-name>EditPublication</display-name>
     <servlet-name>EditPublication</servlet-name>
     <jsp-file>/editpublication.jsp</jsp-file>
@@ -52,7 +52,7 @@
     <servlet-name>EditPublication</servlet-name>
     <url-pattern>/EditPublication</url-pattern>
   </servlet-mapping>
-     <servlet>
+  <servlet>
     <display-name>MyContracts</display-name>
     <servlet-name>MyContracts</servlet-name>
     <jsp-file>/mycontracts.jsp</jsp-file>
@@ -61,7 +61,7 @@
     <servlet-name>MyContracts</servlet-name>
     <url-pattern>/MyContracts</url-pattern>
   </servlet-mapping>
-       <servlet>
+  <servlet>
     <display-name>MyPublication</display-name>
     <servlet-name>MyPublication</servlet-name>
     <jsp-file>/mypublications.jsp</jsp-file>
@@ -71,7 +71,7 @@
     <url-pattern>/MyPublication</url-pattern>
   </servlet-mapping>
   <servlet>
-   <display-name>EditSociety</display-name>
+    <display-name>EditSociety</display-name>
     <servlet-name>EditSociety</servlet-name>
     <jsp-file>/editsociety.jsp</jsp-file>
   </servlet>
@@ -91,16 +91,16 @@
     <servlet-name>MembreSociete</servlet-name>
     <url-pattern>/MembreSociete</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>UserList</servlet-name>
     <url-pattern>/UserList</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>EditUser</servlet-name>
     <url-pattern>/EditUser</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-	<servlet-name>MInscription</servlet-name>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MInscription</servlet-name>
     <url-pattern>/MInscription</url-pattern>
-</servlet-mapping>
+  </servlet-mapping>
 </web-app>
