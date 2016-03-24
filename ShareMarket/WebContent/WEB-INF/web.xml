@@ -34,6 +34,51 @@
     <servlet-name>MembreSociete</servlet-name>
     <jsp-file>/societymember.jsp</jsp-file>
   </servlet>
+    <servlet>
+    <display-name>EditContract</display-name>
+    <servlet-name>EditContract</servlet-name>
+    <jsp-file>/editcontract.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditContract</servlet-name>
+    <url-pattern>/EditContract</url-pattern>
+  </servlet-mapping>
+     <servlet>
+    <display-name>EditPublication</display-name>
+    <servlet-name>EditPublication</servlet-name>
+    <jsp-file>/editpublication.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditPublication</servlet-name>
+    <url-pattern>/EditPublication</url-pattern>
+  </servlet-mapping>
+     <servlet>
+    <display-name>MyContracts</display-name>
+    <servlet-name>MyContracts</servlet-name>
+    <jsp-file>/mycontracts.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyContracts</servlet-name>
+    <url-pattern>/MyContracts</url-pattern>
+  </servlet-mapping>
+       <servlet>
+    <display-name>MyPublication</display-name>
+    <servlet-name>MyPublication</servlet-name>
+    <jsp-file>/mypublications.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyPublication</servlet-name>
+    <url-pattern>/MyPublication</url-pattern>
+  </servlet-mapping>
+  <servlet>
+   <display-name>EditSociety</display-name>
+    <servlet-name>EditSociety</servlet-name>
+    <jsp-file>/editsociety.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditSociety</servlet-name>
+    <url-pattern>/EditSociety</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Admin</servlet-name>
     <url-pattern>/Admin</url-pattern>
