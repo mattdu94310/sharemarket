@@ -39,7 +39,7 @@ public class Societe implements Serializable {
 	private List<Contrat> contrats;
 
 	//bi-directional many-to-many association to Secteur_activite
-	@ManyToMany(mappedBy="societes")
+	@ManyToMany(mappedBy="societes", fetch = FetchType.EAGER)
 	private List<Secteur_activite> secteurActivites;
 
 	public Societe() {

@@ -17,6 +17,10 @@ public class MessagesDErreurs {
 		errorMap.put("6", "Un problème est survenu lors de la récupération des informations de votre société");
 		errorMap.put("7", "Votre société n'a pas été trouvé, contactez Hervé");
 		errorMap.put("8", "Société correctement modifié");
+		errorMap.put("9", "Impossible de charger la liste des secteurs");
+		errorMap.put("10", "Erreur de requete veuillez recommencer ou contactez l'administrateur");
+		errorMap.put("11", "Impossible de retrouver le secteur demandé");
+		errorMap.put("11", "Impossible de retrouver la société demandée");
 		map = (Map<String, String>) Collections.unmodifiableMap(errorMap);
 	}
 	

@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Edition d'un contrat</title>
 </head>
 <body>
-
+<h1>Edition d'un contrat</h1>
+<form action="MemberSocietyFunction" method="post">
+<input />
+</form>
 </body>
 </html>

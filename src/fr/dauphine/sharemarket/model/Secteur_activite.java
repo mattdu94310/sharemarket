@@ -63,4 +63,26 @@ public class Secteur_activite implements Serializable {
 		this.societes = societes;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idSecteur;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Secteur_activite other = (Secteur_activite) obj;
+		if (idSecteur != other.idSecteur)
+			return false;
+		return true;
+	}
+
 }
