@@ -21,6 +21,9 @@ public class MessagesDErreurs {
 		errorMap.put("10", "Erreur de requete veuillez recommencer ou contactez l'administrateur");
 		errorMap.put("11", "Impossible de retrouver le secteur demandé");
 		errorMap.put("11", "Impossible de retrouver la société demandée");
+		errorMap.put("12", "Impossible de charger la liste des types de contrat");
+		errorMap.put("13", "Pb type de contrat");
+		errorMap.put("14", "Contrat ajouté");
 		map = (Map<String, String>) Collections.unmodifiableMap(errorMap);
 	}
 	

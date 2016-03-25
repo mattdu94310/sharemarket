@@ -17,7 +17,7 @@ public class Contrat implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_contrat", unique=true, nullable=false)
 	private int idContrat;
 
