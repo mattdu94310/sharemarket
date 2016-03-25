@@ -40,7 +40,7 @@ public class Contrat implements Serializable {
 	private double prixFixe;
 
 	//bi-directional many-to-one association to Type_Contrat
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_type_contrat", nullable=false)
 	private Type_Contrat typeContrat;
 

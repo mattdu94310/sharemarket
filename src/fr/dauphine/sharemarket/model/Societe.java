@@ -35,7 +35,7 @@ public class Societe implements Serializable {
 	private String resume;
 
 	//bi-directional many-to-one association to Contrat
-	@OneToMany(mappedBy="societe")
+	@OneToMany(mappedBy="societe", fetch = FetchType.EAGER)
 	private List<Contrat> contrats;
 
 	//bi-directional many-to-many association to Secteur_activite

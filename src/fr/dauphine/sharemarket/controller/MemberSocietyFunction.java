@@ -49,7 +49,6 @@ public class MemberSocietyFunction extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession session = request.getSession();
 		Byte isMemberSociete=0;
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connected_user");
@@ -93,10 +92,29 @@ public class MemberSocietyFunction extends HttpServlet {
 		case "Nouveau Contrat Prix Fixe" : 
 			nouveauContratPrixFixe(request,response);
 			break;
+		case "ListContrats" : 
+			afficherContratSociete(request,response);
+			break;
 		default : 
 			getServletConfig().getServletContext().getRequestDispatcher("/notfound.html").forward(request,response);
 			return;
 		}	
+	}
+
+	private void afficherContratSociete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connected_user");
+		Societe societe = null;
+		try {
+			societe = societeDAO.findByMemberSociete(utilisateur.getLogin());
+		} catch (ShareMarketException e) {
+			request.setAttribute("message_error", e.getMessage());
+			getServletConfig().getServletContext().getRequestDispatcher("/MembreSociete").forward(request,response);
+			return;
+		}
+		request.setAttribute("contrats",societe.getContrats());
+		getServletConfig().getServletContext().getRequestDispatcher("/MyContracts").forward(request,response);
+		return;
 	}
 
 	private void nouveauContratPrixFixe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
