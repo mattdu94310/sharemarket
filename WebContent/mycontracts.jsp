@@ -1,7 +1,19 @@
+<%@page import="fr.dauphine.sharemarket.model.Utilisateur"%>
 <%@page import="fr.dauphine.sharemarket.model.Contrat"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+	if(session.getAttribute("connected_user")!=null){
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connected_user");
+		if(utilisateur.getMembreSociete()!=1){
+			getServletContext().getRequestDispatcher("/unauthorized.html").forward(request, response);
+		}
+	}else{
+		getServletContext().getRequestDispatcher("/unauthorized.html").forward(request, response);
+	}
+
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,14 +31,19 @@ List<Contrat> contrats = (List<Contrat>) request.getAttribute("contrats");
 <% 
 for(Contrat contrat : contrats) {
 	out.println("<tr>");
-    out.println("<td>"+contrat.getDateEmission()+"</td>");
-    out.println("<td>"+contrat.getEtat()+"</td>");
-    out.println("<td>"+contrat.getPrixFixe()+"</td>");
-    out.println("<td>"+contrat.getPrixDepart()+"</td>");
-    out.println("<td>"+contrat.getDateFinEnchere()+"</td>");
-    out.println("<td>"+contrat.getAchatVente()+"</td>");
+    out.println("<td>"+contrat.getDateEmission().toString().subSequence(0, 10)+"</td>");
+    if(contrat.getEtat()==0) out.println("<td>En cours</td>");
+    else out.println("<td>Fini</td>");
+    if(contrat.getPrixFixe()!=0)out.println("<td>"+contrat.getPrixFixe()+"</td>");
+    else out.println("<td></td>");
+    if(contrat.getPrixDepart()!=0){
+    	out.println("<td>"+contrat.getPrixDepart()+"</td><td>"+contrat.getDateFinEnchere()+"</td>"); 
+    }
+    else out.println("<td></td><td></td>");
+    if(contrat.getAchatVente()==0) out.println("<td>Vente</td>");
+    else out.println("<td>Achat</td>");
     out.println("<td>"+contrat.getTypeContrat().getTypeContrat()+"</td>");
-    out.println("<td></td>");
+    out.println("<td><a href=\"MemberSocietyFunction?Demande=EditExistingContract&id="+contrat.getIdContrat()+"\">Modifier</a></td>");
     out.println("</tr>");
 }
 %>

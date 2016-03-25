@@ -95,10 +95,132 @@ public class MemberSocietyFunction extends HttpServlet {
 		case "ListContrats" : 
 			afficherContratSociete(request,response);
 			break;
+		case "EditExistingContract" :
+			editerContrat(request,response);
+			break;
+		case "Modifier Contrat Enchere" :
+			modifierContratEnchere(request,response);
+			break;
+		case "Modifier Contrat Prix Fixe": 
+			modifierContratPrixFixe(request,response);
+			break;
 		default : 
 			getServletConfig().getServletContext().getRequestDispatcher("/notfound.html").forward(request,response);
 			return;
 		}	
+	}
+
+	private void modifierContratPrixFixe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("societe_id").equals("") || request.getParameter("contrat_id").equals("") || request.getParameter("prix_fixe").equals("") ||  request.getParameter("type_contrat").equals("")){
+			request.setAttribute("message_error", MessagesDErreurs.getMessageDerreur("3"));
+			afficherContratSociete(request, response);
+			return;
+		}
+		Contrat contrat = null;
+		try {
+			contrat = contratDAO.findById(Integer.parseInt(request.getParameter("contrat_id")));
+		} catch (NumberFormatException | ShareMarketException e2) {
+			request.setAttribute("message_error", e2.getMessage());
+			afficherContratSociete(request, response);
+			return;
+		}
+		Type_Contrat type_Contrat;
+		try {
+			type_Contrat = typeContratDAO.findById(Integer.parseInt(request.getParameter("type_contrat")));
+		} catch (NumberFormatException | ShareMarketException e1) {
+			request.setAttribute("message_error", e1.getMessage());
+			afficherContratSociete(request, response);
+			return;
+		}
+		contrat.setTypeContrat(type_Contrat);
+		Byte achat=0;
+		if(request.getParameter("achat_vente")!=null)achat=1;
+		contrat.setAchatVente(achat);
+		contrat.setPrixFixe(Double.parseDouble(request.getParameter("prix_fixe")));
+		contratDAO.update(contrat);
+		request.setAttribute("message_info", MessagesDErreurs.getMessageDerreur("16"));
+		afficherContratSociete(request, response);
+		return;
+	}
+
+	private void modifierContratEnchere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("societe_id").equals("") || request.getParameter("contrat_id").equals("") || request.getParameter("prix_depart").equals("") || request.getParameter("date_fin_echere").equals("")|| request.getParameter("type_contrat").equals("")){
+			request.setAttribute("message_error", MessagesDErreurs.getMessageDerreur("3"));
+			afficherContratSociete(request, response);
+			return;
+		}
+		Contrat contrat = null;
+		try {
+			contrat = contratDAO.findById(Integer.parseInt(request.getParameter("contrat_id")));
+		} catch (NumberFormatException | ShareMarketException e2) {
+			request.setAttribute("message_error", e2.getMessage());
+			afficherContratSociete(request, response);
+			return;
+		}
+		Type_Contrat type_Contrat;
+		try {
+			type_Contrat = typeContratDAO.findById(Integer.parseInt(request.getParameter("type_contrat")));
+		} catch (NumberFormatException | ShareMarketException e1) {
+			request.setAttribute("message_error", e1.getMessage());
+			afficherContratSociete(request, response);
+			return;
+		}
+		contrat.setTypeContrat(type_Contrat);
+		Byte achat=0;
+		if(request.getParameter("achat_vente")!=null)achat=1;
+		contrat.setAchatVente(achat);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    Date parsedDate;
+	    try {
+			parsedDate = dateFormat.parse(request.getParameter("date_fin_echere"));
+		} catch (ParseException e) {
+			request.setAttribute("message_error", e.getMessage());
+			afficherContratSociete(request, response);
+			return;
+		} 
+		contrat.setDateFinEnchere(new Timestamp(parsedDate.getTime()));
+		contrat.setPrixDepart(Double.parseDouble(request.getParameter("prix_depart")));
+		contratDAO.update(contrat);
+		request.setAttribute("message_info", MessagesDErreurs.getMessageDerreur("16"));
+		afficherContratSociete(request, response);
+		return;
+	}
+
+	private void editerContrat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("id")==null){
+			getServletConfig().getServletContext().getRequestDispatcher("/notfound.html").forward(request,response);
+			return;
+		}
+		Contrat contrat=null;
+		try {
+			contrat = contratDAO.findById(Integer.parseInt(request.getParameter("id")));
+		} catch (NumberFormatException | ShareMarketException e) {
+			request.setAttribute("message_error", e.getMessage());
+			getServletConfig().getServletContext().getRequestDispatcher("/MembreSociete").forward(request,response);
+		}
+		MEMBER_SOCIETY_FUNCTION_LOGGER.info("contrat : "+contrat.getIdContrat());
+		request.setAttribute("contrat", contrat);
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connected_user");
+		Societe societe = null;
+		try {
+			societe = societeDAO.findByMemberSociete(utilisateur.getLogin());
+		} catch (ShareMarketException e) {
+			request.setAttribute("message_error", e.getMessage());
+			getServletConfig().getServletContext().getRequestDispatcher("/MembreSociete").forward(request,response);
+			return;
+		}
+		request.setAttribute("societe_id", societe.getIdSociete());
+		List<Type_Contrat> types;
+		try {
+			types=typeContratDAO.getAll();
+		} catch (ShareMarketException e) {
+			request.setAttribute("message_error", e.getMessage());
+			getServletConfig().getServletContext().getRequestDispatcher("/MembreSociete").forward(request,response);
+			return;
+		}
+		request.setAttribute("types", types);
+		getServletConfig().getServletContext().getRequestDispatcher("/EditContract").forward(request,response);
 	}
 
 	private void afficherContratSociete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

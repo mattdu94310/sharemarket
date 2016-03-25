@@ -24,6 +24,9 @@ public class MessagesDErreurs {
 		errorMap.put("12", "Impossible de charger la liste des types de contrat");
 		errorMap.put("13", "Pb type de contrat");
 		errorMap.put("14", "Contrat ajouté");
+		errorMap.put("15", "Impossible de retrouver le contrat");
+		errorMap.put("16", "Contrat modifié");
+
 		map = (Map<String, String>) Collections.unmodifiableMap(errorMap);
 	}
 	

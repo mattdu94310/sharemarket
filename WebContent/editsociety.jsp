@@ -1,9 +1,21 @@
+<%@page import="fr.dauphine.sharemarket.model.Utilisateur"%>
 <%@page import="java.util.List"%>
 <%@page import="fr.dauphine.sharemarket.model.Secteur_activite"%>
 <%@page import="fr.dauphine.sharemarket.error.MessagesDErreurs"%>
 <%@page import="fr.dauphine.sharemarket.model.Societe"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%
+	if(session.getAttribute("connected_user")!=null){
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connected_user");
+		if(utilisateur.getMembreSociete()!=1){
+			getServletContext().getRequestDispatcher("/unauthorized.html").forward(request, response);
+		}
+	}else{
+		getServletContext().getRequestDispatcher("/unauthorized.html").forward(request, response);
+	}
+
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

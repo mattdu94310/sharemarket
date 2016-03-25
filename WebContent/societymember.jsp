@@ -26,10 +26,9 @@ if(request.getAttribute("message_info")!=null){
 	out.println("<p style=\"\">"+request.getAttribute("message_info")+"</p>");
 }
 %>
-<a href="MemberSocietyFunction?Demande=MyPublication">Mes Publications</a>
+
 <a href="MemberSocietyFunction?Demande=EditSociety">Ma Société</a>
 <a href="MemberSocietyFunction?Demande=EditContract">Nouveau Contrat</a>
-<a href="MemberSocietyFunction?Demande=EditPublication">Nouvelle Publication</a>
 <a href="MemberSocietyFunction?Demande=ListContrats">Mes Contrats</a>
 </body>
 </html>
